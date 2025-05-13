@@ -27,7 +27,8 @@
         </div>
       </div>
   
-      <a href="#" onclick="openForm('premium')">Premium</a>
+      <a href="premuim.html" onclick="openForm('premium')">Premium</a>
+      
       <a href="#" onclick="openForm('advertise')">Advertise</a>
       <a href="#" onclick="openForm('upload')">Upload</a>
     </nav>
@@ -42,12 +43,13 @@
     <div class="modal-content">
       <span class="close-btn" onclick="closeForm()">&times;</span>
       <h2 id="form-title">Login</h2>
-      <form>
-        <input type="text" placeholder="Username" required><br>
-        <input type="password" placeholder="Password" required><br>
+      <form onsubmit="handleLogin(event)">
+        <input type="text" id="username" placeholder="Username" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
         <button type="submit">Login</button>
         <p>Don't have an account? <a href="#">Sign Up</a></p>
       </form>
+      
     </div>
   </div>
   
@@ -113,16 +115,51 @@
 </footer>
 <!-- Add JavaScript here -->
 <script src="scripts.js"></script>
+
+
+
+
+
+
+
 <script>
-  function openForm(type) {
-    document.getElementById("form-title").textContent = type.charAt(0).toUpperCase() + type.slice(1) + " Login";
-    document.getElementById("form-modal").style.display = "block";
-  }
   
+  function openForm(type) {
+    if (type === 'premium') {
+      // Check if the user is logged in
+      const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+
+      if (isLoggedIn) {
+        window.location.href = "premium.html";  // Redirect to premium if logged in
+      } else {
+        // Show the login modal if not logged in
+        document.getElementById("form-title").textContent = "Login to access Premium";
+        document.getElementById("form-modal").style.display = "block";
+      }
+    } else {
+      // Open modal for other types (Advertise/Upload)
+      document.getElementById("form-title").textContent = type.charAt(0).toUpperCase() + type.slice(1) + " Login";
+      document.getElementById("form-modal").style.display = "block";
+    }
+  }
+
+  function handleLogin(event) {
+    event.preventDefault();  // Prevent form from refreshing the page
+    
+    // Simulate successful login
+    sessionStorage.setItem("isLoggedIn", "true");
+
+    // Close the modal after login
+    document.getElementById("form-modal").style.display = "none";
+
+    // Redirect to Premium page
+    window.location.href = "premium.html";  // Replace with the actual premium page URL
+  }
+
   function closeForm() {
     document.getElementById("form-modal").style.display = "none";
   }
-  </script>
+</script>
   
 </body>
 </html>
