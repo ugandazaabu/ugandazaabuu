@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Play Video - UgandaZaabu</title>
+  <link rel="stylesheet" href="style.css"> <!-- Link to shared CSS -->
+  <style>
+    .container {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .video-section {
+      flex: 2;
+      background-color: #111;
+      border: 2px solid #ffcc00;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    video {
+      width: 100%;
+      max-height: 70vh;
+      background-color: black;
+      border-radius: 4px;
+    }
+
+    .comment-section {
+      flex: 1;
+      background-color: #222;
+      border: 2px solid #ff0000;
+      border-radius: 8px;
+      padding: 10px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .comment-section h3 {
+      color: #ffcc00;
+      margin-bottom: 10px;
+    }
+
+    .comment {
+      background-color: #111;
+      border-left: 4px solid #ffcc00;
+      padding: 10px;
+      margin-bottom: 10px;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    .comment-form textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+      background-color: #333;
+      color: #fff;
+      resize: vertical;
+    }
+
+    .comment-form button {
+      margin-top: 8px;
+      background-color: #ffcc00;
+      border: none;
+      padding: 8px 12px;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .comment-form button:hover {
+      background-color: #ff0000;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo"><strong>UgandaZaabu</strong></div>
+  
+    <nav>
+      <a href="index.html">Home</a>
+     <!--  <a href="#">Trending</a>-->
+  
+      <div class="dropdown">
+        <a href="#">Categories ▾</a>
+        <div class="dropdown-content">
+          <a href="#">Music</a>
+          <a href="#">Documentaries</a>
+          <a href="#">Street Life</a>
+          <a href="#">Education</a>
+        </div>
+      </div>
+  
+      <a href="#" onclick="openForm('premium')">Premium</a>
+      <a href="#" onclick="openForm('advertise')">Advertise</a>
+      <a href="#" onclick="openForm('upload')">Upload</a>
+    </nav>
+  
+    <div class="search-bar">
+      <input type="text" placeholder="Search videos...">
+    </div>
+  </header>
+  
+  <!-- Login/Signup Modal -->
+  <div id="form-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeForm()">&times;</span>
+      <h2 id="form-title">Login</h2>
+      <form>
+        <input type="text" placeholder="Username" required><br>
+        <input type="password" placeholder="Password" required><br>
+        <button type="submit">Login</button>
+        <p>Don't have an account? <a href="#">Sign Up</a></p>
+      </form>
+    </div>
+  </div>
+  
+
+<main class="container">
+  <div class="video-section">
+    <video controls autoplay>
+      <source id="videoSource" src="" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+  </div>
+
+  <div class="comment-section">
+    <h3>Comments</h3>
+
+    <div class="comment">
+      <strong>Alex:</strong> Great video on Ugandan culture!
+    </div>
+    <div class="comment">
+      <strong>Jane:</strong> Loved the visuals. Keep uploading more!
+    </div>
+
+    <form class="comment-form">
+      <textarea placeholder="Add a comment..." rows="3"></textarea>
+      <button type="submit">Post Comment</button>
+    </form>
+  </div>
+  
+</main>
+<div class="more-videos-section">
+    <h2>More Videos</h2>
+    <div class="video-grid">
+      <a href="play.html?video=video1.mp4" class="video-card">
+        <img src="thumb1.jpg" alt="Video 1">
+        <p>Exciting Video 1</p>
+      </a>
+      <a href="play.html?video=video2.mp4" class="video-card">
+        <img src="thumb2.jpg" alt="Video 2">
+        <p>Exciting Video 2</p>
+      </a>
+      <a href="play.html?video=video2.mp4" class="video-card">
+        <img src="thumb2.jpg" alt="Video 2">
+        <p>Exciting Video 3</p>
+      </a>
+      <a href="play.html?video=video2.mp4" class="video-card">
+        <img src="thumb2.jpg" alt="Video 2">
+        <p>Exciting Video 4</p>
+      </a>
+      <a href="play.html?video=video2.mp4" class="video-card">
+        <img src="thumb2.jpg" alt="Video 2">
+        <p>Exciting Video 5</p>
+      </a>
+      <a href="play.html?video=video2.mp4" class="video-card">
+        <img src="thumb2.jpg" alt="Video 2">
+        <p>Exciting Video 6</p>
+      </a>
+      <a href="play.html?video=video2.mp4" class="video-card">
+        <img src="thumb2.jpg" alt="Video 2">
+        <p>Exciting Video 7</p>
+      </a>
+      <a href="play.html?video=video3.mp4" class="video-card">
+        <img src="thumb3.jpg" alt="Video 3">
+        <p>Exciting Video 8</p>
+      </a>
+      
+      <!-- Add more videos as needed -->
+    </div>
+  </div>
+  
+<footer>
+  <p>© UgandaZaabu 2025 | Terms | Privacy | Contact</p>
+</footer>
+<!-- Add JavaScript here -->
+<script src="scripts.js"></script>
+<script>
+  // Load video from URL param
+  const urlParams = new URLSearchParams(window.location.search);
+  const videoUrl = urlParams.get('video');
+  if (videoUrl) {
+    document.getElementById('videoSource').src = videoUrl;
+    document.querySelector('video').load();
+  }
+</script>
+<script>
+  function openForm(type) {
+    document.getElementById("form-title").textContent = type.charAt(0).toUpperCase() + type.slice(1) + " Login";
+    document.getElementById("form-modal").style.display = "block";
+  }
+  
+  function closeForm() {
+    document.getElementById("form-modal").style.display = "none";
+  }
+  </script>
+  
+</body>
+</html>
