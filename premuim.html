@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Premium Content - UgandaZaabu</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .video-card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 15px;
+      text-align: center;
+      border-radius: 10px;
+    }
+    .subscribe-btn {
+      margin-top: 10px;
+      padding: 8px 15px;
+      background-color: gold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .close-btn {
+      float: right;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><strong>UgandaZaabu</strong></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="premuim.html">Premium</a>
+    <a href="index.html">Logout</a>
+  </nav>
+</header>
+
+<main>
+  <h2 style="text-align:center;">Premium Content</h2>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <img src="https://via.placeholder.com/300x200?text=Creator+1" alt="Video">
+      <h3>Creator 1 - Behind The Scenes</h3>
+      <button class="subscribe-btn" onclick="openPaymentModal()">Subscribe to Watch</button>
+    </div>
+
+    <div class="video-card">
+      <img src="https://via.placeholder.com/300x200?text=Creator+2" alt="Video">
+      <h3>Creator 2 - Life in Kampala</h3>
+      <button class="subscribe-btn" onclick="openPaymentModal()">Subscribe to Watch</button>
+    </div>
+
+    <div class="video-card">
+      <img src="https://via.placeholder.com/300x200?text=Creator+3" alt="Video">
+      <h3>Creator 3 - Local Street Food</h3>
+      <button class="subscribe-btn" onclick="openPaymentModal()">Subscribe to Watch</button>
+    </div>
+  </div>
+</main>
+
+<!-- Payment Modal -->
+<div id="payment-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+    <h3>Choose a Plan</h3>
+    <button onclick="alert('Subscribed for 30,000 UGX/month!')">Monthly - 30,000 UGX</button>
+    <br/><br/>
+    <button onclick="alert('Subscribed for 300,000 UGX/year!')">Yearly - 300,000 UGX</button>
+  </div>
+</div>
+
+<script>
+  function openPaymentModal() {
+    document.getElementById("payment-modal").style.display = "flex";
+  }
+
+  function closePaymentModal() {
+    document.getElementById("payment-modal").style.display = "none";
+  }
+
+  // Redirect if not logged in (fake login check)
+    //window.onload = function() {
+    //const loggedIn = sessionStorage.getItem("isLoggedIn");
+    //if (loggedIn !== "true") {
+      //alert("You must be logged in to view premium content.");
+     // window.location.href = "index.html";
+   // }
+  //}
+</script>
+
+</body>
+</html>
