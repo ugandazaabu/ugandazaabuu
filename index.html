@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   
-  <title>UgandaZaabu - Home</title>
+  <title>UgandaZaabu</title>
   <link rel="stylesheet" href="style.css">
 
 </head>
@@ -28,9 +28,8 @@
       </div>
   
       <a href="premuim.html">Premium</a>
-      
-      <a href="#" onclick="openForm('advertise')">Advertise</a>
-      <a href="#" onclick="openForm('upload')">Upload</a>
+      <a href="Advertise.html">Advertise</a>
+      <a href="Dashboard.html">Upload</a>
     </nav>
   
     <div class="search-bar">
@@ -43,6 +42,7 @@
     <div class="modal-content">
       <span class="close-btn" onclick="closeForm()">&times;</span>
       <h2 id="form-title">Login</h2>
+
       <form onsubmit="handleLogin(event)">
         <input type="text" id="username" placeholder="Username" required><br>
         <input type="password" id="password" placeholder="Password" required><br>

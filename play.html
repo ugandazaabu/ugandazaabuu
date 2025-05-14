@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Play Video - UgandaZaabu</title>
+  <title>UgandaZaabu</title>
   <link rel="stylesheet" href="style.css"> <!-- Link to shared CSS -->
   <style>
     .container {
@@ -78,7 +78,94 @@
       background-color: #ff0000;
       color: white;
     }
-  </style>
+  .container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+
+  .video-section {
+    flex: 2;
+    background-color: #111;
+    border: 2px solid #ffcc00;
+    border-radius: 8px;
+    padding: 10px;
+    min-width: 300px;
+  }
+
+  video {
+    width: 100%;
+    max-height: 70vh;
+    background-color: black;
+    border-radius: 4px;
+  }
+
+  .comment-section {
+    flex: 1;
+    background-color: #222;
+    border: 2px solid #ff0000;
+    border-radius: 8px;
+    padding: 10px;
+    max-height: 70vh;
+    overflow-y: auto;
+    min-width: 280px;
+  }
+
+  .comment-section h3 {
+    color: #ffcc00;
+    margin-bottom: 10px;
+  }
+
+  .comment {
+    background-color: #111;
+    border-left: 4px solid #ffcc00;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+    border-radius: 4px;
+  }
+
+  .comment-form textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    resize: vertical;
+  }
+
+  .comment-form button {
+    margin-top: 8px;
+    background-color: #ffcc00;
+    border: none;
+    padding: 8px 12px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .comment-form button:hover {
+    background-color: #ff0000;
+    color: white;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+
+    .video-section,
+    .comment-section {
+      max-height: none;
+      width: 100%;
+    }
+  }
+</style>
 </head>
 <body>
 

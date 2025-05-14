@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UgandaZaabu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: white;
+      padding: 20px;
+    }
+
+    .upload-container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #222;
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid #ffcc00;
+    }
+
+    h2 {
+      text-align: center;
+      color: #ffcc00;
+    }
+
+    .drag-drop {
+      border: 2px dashed #ffcc00;
+      padding: 40px;
+      text-align: center;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      background-color: #111;
+    }
+
+    .drag-drop.hover {
+      background-color: #333;
+    }
+
+    .radio-section {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    label {
+      margin-right: 10px;
+    }
+
+    input[type="text"], textarea, input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #333;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .agreement {
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #ffcc00;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff0000;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="upload-container">
+    <h2>Upload Content</h2>
+
+    <div class="drag-drop" id="drop-area">
+      <p>Drag & Drop Video Here or Click to Upload</p>
+      <input type="file" id="fileElem" accept="video/*" style="display:none;">
+    </div>
+
+    <div class="radio-section">
+      <label><input type="radio" name="access" value="free" checked> Free</label>
+      <label><input type="radio" name="access" value="premium"> Premium</label>
+    </div>
+
+    <input type="text" placeholder="Title (required)" required />
+    <textarea rows="4" placeholder="Description (optional)"></textarea>
+    <input type="number" placeholder="Set your price (UGX)" min="0" step="100" />
+
+    <div class="agreement">
+      <input type="checkbox" id="agree" required />
+      <label for="agree">I agree to give UgandaZaabu 20% of the revenue.</label>
+    </div>
+
+    <button type="submit">Upload</button>
+  </div>
+
+  <script>
+    const dropArea = document.getElementById("drop-area");
+    const fileElem = document.getElementById("fileElem");
+
+    dropArea.addEventListener("click", () => fileElem.click());
+
+    dropArea.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropArea.classList.add("hover");
+    });
+
+    dropArea.addEventListener("dragleave", () => {
+      dropArea.classList.remove("hover");
+    });
+
+    dropArea.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropArea.classList.remove("hover");
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        alert(`You selected: ${files[0].name}`);
+        // You can add upload logic here
+      }
+    });
+
+    fileElem.addEventListener("change", () => {
+      if (fileElem.files.length > 0) {
+        alert(`You selected: ${fileElem.files[0].name}`);
+        // You can add upload logic here
+      }
+    });
+  </script>
+</body>
+</html>
