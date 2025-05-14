@@ -4,105 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UgandaZaabu Upload</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: white;
-      padding: 20px;
-    }
-    .upload-container {
-      max-width: 600px;
-      margin: auto;
-      background-color: #222;
-      padding: 20px;
-      border-radius: 10px;
-      border: 2px solid #ffcc00;
-    }
-    h2 {
-      text-align: center;
-      color: #ffcc00;
-    }
-    .drag-drop {
-      border: 2px dashed #ffcc00;
-      padding: 40px;
-      text-align: center;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      background-color: #111;
-      cursor: pointer;
-    }
-    .drag-drop.hover {
-      background-color: #333;
-    }
-    .radio-section {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 15px;
-    }
-    input[type="text"], textarea, input[type="number"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      background-color: #333;
-      color: white;
-      margin-bottom: 15px;
-    }
-    .agreement {
-      font-size: 0.9em;
-      margin-bottom: 20px;
-    }
-    button {
-      background-color: #ffcc00;
-      color: black;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #ff0000;
-      color: white;
-    }
-    #price-container {
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="upload-container">
-    <h2>Upload Content</h2>
-    <div class="drag-drop" id="drop-area">
-      <p>Drag & Drop Video Here or Click to Upload</p>
-      <input type="file" id="fileElem" accept="video/*" style="display:none;">
-    </div>
-    <div class="radio-section">
-      <label><input type="radio" name="access" value="free" checked> Free</label>
-      <label><input type="radio" name="access" value="premium"> Premium</label>
-    </div>
-    <input type="text" id="title" placeholder="Title (required)" required />
-    <textarea id="description" rows="4" placeholder="Description (optional)"></textarea>
-    <div id="price-container">
-      <input type="number" id="price" placeholder="Set your price (UGX)" min="0" step="100" />
-    </div>
-    <div class="agreement">
-      <input type="checkbox" id="agree" required />
-      <label for="agree">I agree to give UgandaZaabu 20% of the revenue.</label>
-    </div>
-    <button id="uploadBtn">Upload</button>
-  </div>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
-
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    import { getStorage, ref, uploadBytesResumable } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD8y7V6HUIDyavR6Fqj9bfJKBt0T9CUi0Y",
@@ -115,62 +21,99 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const storage = getStorage(app);
     const provider = new GoogleAuthProvider();
+    const storage = getStorage(app);
+    const db = getFirestore(app);
 
-    const fileElem = document.getElementById("fileElem");
-    const dropArea = document.getElementById("drop-area");
-    const priceContainer = document.getElementById("price-container");
+    const uploadButton = document.getElementById("upload-btn");
+    const fileInput = document.getElementById("fileElem");
 
-    document.querySelectorAll('input[name="access"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        priceContainer.style.display = radio.value === 'premium' ? 'block' : 'none';
-      });
-    });
-
-    dropArea.addEventListener("click", () => fileElem.click());
-    dropArea.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      dropArea.classList.add("hover");
-    });
-    dropArea.addEventListener("dragleave", () => dropArea.classList.remove("hover"));
-    dropArea.addEventListener("drop", (e) => {
-      e.preventDefault();
-      dropArea.classList.remove("hover");
-      if (e.dataTransfer.files.length > 0) fileElem.files = e.dataTransfer.files;
-    });
-
-    document.getElementById("uploadBtn").addEventListener("click", async () => {
-      const user = auth.currentUser;
-      if (!user) {
-        const login = confirm("You must be logged in to upload. Would you like to log in?");
-        if (login) {
+    uploadButton.addEventListener("click", async () => {
+      onAuthStateChanged(auth, async (user) => {
+        if (!user) {
           try {
-            await signInWithPopup(auth, provider);
-            alert("Login successful, now upload your file.");
+            const result = await signInWithPopup(auth, provider);
+            console.log("Logged in as:", result.user.displayName);
           } catch (error) {
             alert("Login failed: " + error.message);
             return;
           }
-        } else {
+        }
+
+        const file = fileInput.files[0];
+        if (!file) {
+          alert("Please select a video file.");
           return;
         }
-      }
 
-      const file = fileElem.files[0];
-      if (!file) return alert("Please select a file first.");
+        const title = document.getElementById("video-title").value;
+        const desc = document.getElementById("video-description").value;
+        const accessType = document.querySelector('input[name="access"]:checked').value;
+        const price = accessType === "premium" ? document.getElementById("price").value : 0;
 
-      const storageRef = ref(storage, `videos/${user.uid}/${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
+        const storageRef = ref(storage, `videos/${auth.currentUser.uid}/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-        },
-        (error) => alert("Upload failed: " + error.message),
-        () => alert("Upload successful!")
-      );
+        uploadTask.on('state_changed', 
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+          }, 
+          (error) => {
+            alert("Upload failed: " + error.message);
+          }, 
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            await addDoc(collection(db, "videos"), {
+              title,
+              desc,
+              price,
+              accessType,
+              url: downloadURL,
+              userId: auth.currentUser.uid,
+              createdAt: serverTimestamp()
+            });
+            alert("Upload successful!");
+          }
+        );
+      });
+    });
+  </script>
+</head>
+<body style="background:#111;color:white;font-family:sans-serif;padding:20px">
+  <div class="upload-container" style="max-width:600px;margin:auto;background:#222;padding:20px;border-radius:10px;border:2px solid #ffcc00">
+    <h2 style="text-align:center;color:#ffcc00">Upload Content</h2>
+
+    <div class="drag-drop" onclick="document.getElementById('fileElem').click();" style="border:2px dashed #ffcc00;padding:40px;text-align:center;border-radius:10px;margin-bottom:20px;cursor:pointer">
+      <p>Click to Select a Video</p>
+      <input type="file" id="fileElem" accept="video/*" style="display:none;">
+    </div>
+
+    <div style="display:flex;justify-content:space-between;margin-bottom:15px">
+      <label><input type="radio" name="access" value="free" checked> Free</label>
+      <label><input type="radio" name="access" value="premium"> Premium</label>
+    </div>
+
+    <input type="text" id="video-title" placeholder="Title (required)" required style="width:100%;padding:10px;background:#333;color:white;border:none;border-radius:5px;margin-bottom:15px">
+    <textarea rows="4" id="video-description" placeholder="Description (optional)" style="width:100%;padding:10px;background:#333;color:white;border:none;border-radius:5px;margin-bottom:15px"></textarea>
+
+    <div id="price-container" style="display:none">
+      <input type="number" id="price" placeholder="Set your price (UGX)" min="0" step="100" style="width:100%;padding:10px;background:#333;color:white;border:none;border-radius:5px;margin-bottom:15px">
+    </div>
+
+    <div class="agreement" style="font-size:0.9em;margin-bottom:20px">
+      <input type="checkbox" id="agree" required />
+      <label for="agree">I agree to give UgandaZaabu 20% of the revenue.</label>
+    </div>
+
+    <button type="button" id="upload-btn" style="background:#ffcc00;color:black;padding:10px 20px;border:none;border-radius:5px;font-weight:bold;cursor:pointer">Upload</button>
+  </div>
+
+  <script>
+    document.querySelectorAll('input[name="access"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        document.getElementById('price-container').style.display = radio.value === 'premium' ? 'block' : 'none';
+      });
     });
   </script>
 </body>
