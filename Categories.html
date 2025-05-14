@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Category - UgandaZaabu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo"><strong>UgandaZaabu</strong></div>
+      
+        <nav>
+          <a href="index.html">Home</a>
+          <!--<a href="#">Trending</a>-->
+      
+          <div class="dropdown">
+            <a href="#">Categories ▾</a>
+            <div class="dropdown-content">
+              <a href="Categories.html?tribe=Acholi">Acholi</a>
+              <a href="Categories.html?tribe=Alur">Alur</a>
+              <a href="Categories.html?tribe=Baganda">Baganda</a>
+              <a href="Categories.html?tribe=Banyankole">Banyankole</a>
+              <a href="Categories.html?tribe=Bakiga">Bakiga</a>
+              <a href="Categories.html?tribe=Batoro">Batoro</a>
+              <a href="Categories.html?tribe=Bakonjo">Bakonjo</a>
+              <a href="Categories.html?tribe=Basoga">Basoga</a>
+              <a href="Categories.html?tribe=Bangisu">Bagisu</a>
+              <a href="Categories.html?tribe=Banyarwanda">Banyarwanda</a>
+              <a href="Categories.html?tribe=Bafumbira">Bafumbira</a>
+              <a href="Categories.html?tribe=Banyoro">Banyoro</a>
+              <a href="Categories.html?tribe=Banyole">Banyole</a>
+              <a href="Categories.html?tribe=Basamia">Basamia</a>
+              <a href="Categories.html?tribe=Bagwe">Bagwe</a>
+              <a href="Categories.html?tribe=Bakonzo">Bakonzo</a>
+              <a href="Categories.html?tribe=Baamba">Baamba</a>
+              <a href="Categories.html?tribe=Bakonza">Bakonza</a>
+              <a href="Categories.html?tribe=Langi">Langi</a>
+              <a href="Categories.html?tribe=Jonam">Jonam</a>
+              <a href="Categories.html?tribe=Japadhola">Japadhola</a>
+              <a href="Categories.html?tribe=Karamojong">Karamojong</a>
+              <a href="Categories.html?tribe=Iteso">Iteso</a>
+              <a href="Categories.html?tribe=Kumam">Kumam</a>
+              <a href="Categories.html?tribe=Lugbara">Lugbara</a>
+              <a href="Categories.html?tribe=Madi">Madi</a>
+              <a href="Categories.html?tribe=Nubi">Nubi</a>
+            </div>
+          </div>
+      
+          <a href="premuim.html">Premium</a>
+          <a href="Advertise.html">Advertise</a>
+          <a href="Dashboard.html">Upload</a>
+        </nav>
+      
+        <div class="search-bar">
+          <input type="text" placeholder="Search videos...">
+        </div>
+      </header>
+
+  <main>
+    <h2 id="categoryTitle">Category Videos</h2>
+    <div class="video-grid" id="videoList">
+      <!-- Videos will load here -->
+    </div>
+  </main>
+  <footer>
+    <p>© UgandaZaabu 2025 | Terms | Privacy | Contact</p>
+  </footer>
+
+  <script>
+    // Sample data
+    const videoData = {
+      Acholi: [
+        { title: "Acholi Video 1", src: "https://example.com/acholi1.mp4", thumbnail: "https://via.placeholder.com/300x200?text=Acholi+1" },
+        { title: "Acholi Video 2", src: "https://example.com/acholi2.mp4", thumbnail: "https://via.placeholder.com/300x200?text=Acholi+2" },
+        { title: "Acholi Video 1", src: "https://example.com/acholi1.mp4", thumbnail: "https://via.placeholder.com/300x200?text=Acholi+1" },
+        { title: "Acholi Video 2", src: "https://example.com/acholi2.mp4", thumbnail: "https://via.placeholder.com/300x200?text=Acholi+2" }
+        
+      ],
+      Alur: [
+        { title: "Alur Video 1", src: "https://example.com/acholi1.mp4", thumbnail: "https://via.placeholder.com/300x200?text=Acholi+1" },
+        { title: "Alur Video 2", src: "https://example.com/acholi2.mp4", thumbnail: "https://via.placeholder.com/300x200?text=Acholi+2" }
+      ],
+      Baganda: [
+        { title: "Baganda Video 1", src: "https://example.com/baganda1.mp4", thumbnail: "https://via.placeholder.com/300x200?text=Baganda+1" }
+      ],
+      Banyankole: [
+        { title: "Banyankole Video 1", src: "https://example.com/banyankole1.mp4", thumbnail: "https://via.placeholder.com/300x200?text=Banyankole+1" }
+      ],
+      Bakiga:[
+        {title: "Bakiga video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Bakiga video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Batoro:[
+        {title: "Batoro video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Batoro video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Bakonjo:[
+        {title: "Bakonjo video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Bakonjo video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Basoga:[
+        {title: "Basoga video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Basoga video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Bagisu:[
+        {title: "Bagisu video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Bagisu video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Banyarwanda:[
+        {title: "Banyarwanda video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Banyarwanda video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Bafumbira:[
+        {title: "Bafumbira video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Bafumbira video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Banyoro:[
+        {title: "Banyoro video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Banyoro video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Banyole:[
+        {title: "Banyole video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Banyole video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Basamia:[
+        {title: "Basamia video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Basamia video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Bagwe:[
+        {title: "Bagwe video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Bagwe video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Bakonzo:[
+        {title: "Bakonzo video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Bakonzo video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Baamba:[
+        {title: "Baamba video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Baamba video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Bakonzo:[
+        {title: "Bakonzo video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Bakonzo video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Bakonza:[
+        {title: "Bakonza video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Bakonza video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Langi:[
+        {title: "Langi video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Langi video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Jonam:[
+        {title: "Jonam video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Jonam video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Langi:[
+        {title: "Langi video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Langi video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Japadhola:[
+        {title: "Japadhola video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Japadhola video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Karamojong:[
+        {title: "Karamojong video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Karamojong video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Iteso:[
+        {title: "Iteso video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "iteso video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Kumam:[
+        {title: "Kumam video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Kumam video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Lugbara:[
+        {title: "Lugbara video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Lugbara video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Madi:[
+        {title: "Madi video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Madi video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+      Nubi:[
+        {title: "Nubi video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=Bakiga"},
+        {title: "Nubi video 1", src: "https://example.com/bakiga.mp4",thumbnail: "https://via.placeholder.com/300x200?text=bakiga"}
+      ],
+    };
+
+    // Get URL parameter
+    const params = new URLSearchParams(window.location.search);
+    const tribe = params.get('tribe');
+
+    // Update title and videos
+    const title = document.getElementById('categoryTitle');
+    const videoList = document.getElementById('videoList');
+
+    if (tribe && videoData[tribe]) {
+      title.textContent = `${tribe.charAt(0).toUpperCase() + tribe.slice(1)} Videos`;
+      videoData[tribe].forEach(video => {
+        const a = document.createElement('a');
+        a.className = 'video-card';
+        a.href = `play.html?video=${encodeURIComponent(video.src)}`;
+        a.innerHTML = `
+          <img src="${video.thumbnail}" alt="${video.title}">
+          <div class="video-title">${video.title}</div>
+        `;
+        videoList.appendChild(a);
+      });
+    } else {
+      title.textContent = "Category not found.";
+    }
+  </script>
+</body>
+</html>
