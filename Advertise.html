@@ -28,12 +28,13 @@
 
     .drag-drop {
       border: 2px dashed #00cc99;
-      padding: 40px;
+      padding: 40px 20px;
       text-align: center;
       border-radius: 10px;
       margin-bottom: 20px;
       background-color: #111;
       cursor: pointer;
+      position: relative;
     }
 
     .drag-drop.hover {
@@ -77,6 +78,43 @@
       background-color: #ff9900;
       color: white;
     }
+
+    .preview-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .preview-container img,
+    .preview-container video {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .drag-drop {
+        padding: 20px 10px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+
+    #choose-file-btn {
+      background-color: #444;
+      color: #fff;
+      padding: 8px 15px;
+      margin-top: 10px;
+      border-radius: 5px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    #choose-file-btn:hover {
+      background-color: #555;
+    }
   </style>
 </head>
 <body>
@@ -85,14 +123,17 @@
 
     <div class="drag-drop" id="drop-area">
       <p>Drag & Drop Ad Image or Video Here</p>
+      <div id="choose-file-btn">Choose File</div>
       <input type="file" id="fileElem" accept="image/*,video/*" style="display:none;">
     </div>
 
-    <input type="text" placeholder="Ad Title (required)" required />
-    <textarea rows="3" placeholder="Ad Description (optional)"></textarea>
-    <input type="url" placeholder="Link to your website or product (optional)" />
+    <div class="preview-container" id="preview"></div>
 
-    <div class="radio-section">
+    <input type="text" id="ad-title" placeholder="Ad Title (required)" required />
+    <textarea id="ad-description" rows="3" placeholder="Ad Description (optional)"></textarea>
+    <input type="url" id="ad-link" placeholder="Link to your website or product (optional)" />
+
+    <div class="radio-section" id="plan-section">
       <label><input type="radio" name="plan" value="daily" checked> Daily Plan - UGX 5,000</label><br>
       <label><input type="radio" name="plan" value="weekly"> Weekly Plan - UGX 20,000</label><br>
       <label><input type="radio" name="plan" value="monthly"> Monthly Plan - UGX 60,000</label>
@@ -112,14 +153,19 @@
       <label for="agree">I agree to the terms of advertising on UgandaZaabu.</label>
     </div>
 
-    <button type="submit">Submit & Proceed to Payment</button>
+    <button id="submit-btn" type="button">Submit & Proceed to Payment</button>
   </div>
 
   <script>
     const dropArea = document.getElementById("drop-area");
     const fileElem = document.getElementById("fileElem");
+    const preview = document.getElementById("preview");
+    const chooseFileBtn = document.getElementById("choose-file-btn");
+
+    let uploadedFile = null;
 
     dropArea.addEventListener("click", () => fileElem.click());
+    chooseFileBtn.addEventListener("click", () => fileElem.click());
 
     dropArea.addEventListener("dragover", (e) => {
       e.preventDefault();
@@ -135,16 +181,90 @@
       dropArea.classList.remove("hover");
       const files = e.dataTransfer.files;
       if (files.length > 0) {
-        alert(`You selected: ${files[0].name}`);
-        // Handle file upload here
+        uploadedFile = files[0];
+        handleFilePreview(files[0]);
       }
     });
 
     fileElem.addEventListener("change", () => {
       if (fileElem.files.length > 0) {
-        alert(`You selected: ${fileElem.files[0].name}`);
-        // Handle file upload here
+        uploadedFile = fileElem.files[0];
+        handleFilePreview(fileElem.files[0]);
       }
+    });
+
+    function handleFilePreview(file) {
+      const fileType = file.type;
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        if (fileType.startsWith("image/")) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Ad Preview">`;
+        } else if (fileType.startsWith("video/")) {
+          preview.innerHTML = `
+            <video controls>
+              <source src="${e.target.result}" type="${fileType}">
+              Your browser does not support the video tag.
+            </video>`;
+        } else {
+          preview.innerHTML = "<p>Unsupported file type</p>";
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    document.getElementById("submit-btn").addEventListener("click", () => {
+      const title = document.getElementById("ad-title").value.trim();
+      const agree = document.getElementById("agree").checked;
+      if (!title) {
+        alert("Please enter the Ad Title.");
+        return;
+      }
+      if (!agree) {
+        alert("You must agree to the terms of advertising.");
+        return;
+      }
+
+      const description = document.getElementById("ad-description").value.trim();
+      const link = document.getElementById("ad-link").value.trim();
+      const plan = document.querySelector('input[name="plan"]:checked').value;
+      const paymentMethod = document.getElementById("payment-method").value;
+
+      if (paymentMethod !== "momo") {
+        alert("Currently, only Mobile Money payment is supported.");
+        return;
+      }
+
+      const phone = prompt("Enter your mobile money phone number (e.g., +2567XXXXXXXX):");
+      if (!phone || !phone.match(/^\+2567\d{8}$/)) {
+        alert("Please enter a valid Ugandan phone number starting with +2567...");
+        return;
+      }
+
+      const adData = {
+        title,
+        description,
+        link,
+        plan,
+        paymentMethod,
+        phone
+      };
+
+      fetch('https://yourserver.com/initiate-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(adData)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("Payment request sent. Please complete it on your phone.");
+        } else {
+          alert("Payment failed: " + data.message);
+        }
+      })
+      .catch(() => alert("Error connecting to payment server. Please try again."));
     });
   </script>
 </body>

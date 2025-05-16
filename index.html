@@ -3,10 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  
   <title>UgandaZaabu</title>
   <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
@@ -65,18 +63,14 @@
     <div class="modal-content">
       <span class="close-btn" onclick="closeForm()">&times;</span>
       <h2 id="form-title">Login</h2>
-
       <form onsubmit="handleLogin(event)">
         <input type="text" id="username" placeholder="Username" required><br>
         <input type="password" id="password" placeholder="Password" required><br>
         <button type="submit">Login</button>
         <p>Don't have an account? <a href="#">Sign Up</a></p>
       </form>
-      
     </div>
   </div>
-  
-
 <main>
   <div class="video-grid">
     <a href="play.html?video=https://example.com/video1.mp4" class="video-card">
@@ -91,21 +85,19 @@
         <img src="https://via.placeholder.com/300x200?text=Hope+Video" alt="Hope Video">
         <div class="video-title">video3</div>
     </a>
+    <a href="play.html?video=https://example.com/video1.mp4" class="video-card">
+      <img src="https://via.placeholder.com/300x200?text=Hope+Video" alt="Hope Video">
+      <div class="video-title">video3</div>
+  </a>
   </div>
 </main>
+<div class="ad-grid" id="ads-container"></div>
 
 <footer>
   <p>© UgandaZaabu 2025 | Terms | Privacy | Contact</p>
 </footer>
 <!-- Add JavaScript here -->
 <script src="scripts.js"></script>
-
-
-
-
-
-
-
 <script>
   
   function openForm(type) {
@@ -144,6 +136,44 @@
     document.getElementById("form-modal").style.display = "none";
   }
 </script>
-  
+<script>
+  const ads = [
+    {
+      title: "Chat & Meet Hot Singles",
+      image: "ad1.jpg",
+      link: "https://your-ad-link1.com"
+    },
+    {
+      title: "Buy Herbal Remedies",
+      image: "ad2.jpg",
+      link: "https://your-ad-link2.com"
+    },
+    {
+      title: "Crypto Investments Guide",
+      image: "ad3.jpg",
+      link: "https://your-ad-link3.com"
+    },
+    {
+      title: "shop now",
+      image: "ad4.jpg",
+      link: "https://your-ad-link3.com"
+    }
+    
+  ];
+
+  const adContainer = document.getElementById("ads-container");
+
+  ads.forEach(ad => {
+    const card = document.createElement("div");
+    card.className = "ad-card";
+    card.innerHTML = `
+      <img src="${ad.image}" alt="Ad">
+      <h4>${ad.title}</h4>
+      <a href="${ad.link}" target="_blank">Learn More</a>
+    `;
+    adContainer.appendChild(card);
+  });
+</script>
+
 </body>
 </html>
